@@ -1,10 +1,10 @@
 <template>
-  <div style="margin-top:-20px;">
+  <div >
       <div class="rh-page-header">
             <div class="rh-head-and-operate">
                   <div class="tips-content">
                         <span class="rh-helpTip-text">
-                        测试页面4
+                        测试页面1-1
                         </span>
                         <span class="rh-helpTip-icon">
                               <el-tooltip class="item" content="云数据库GaussDB(for MySQL)是华为自研的最新一代企业级高扩展海量存储分布式数据库，完全兼容MySQL">
@@ -12,47 +12,57 @@
                               </el-tooltip>
                         </span>
                   </div>
-                  <div class="operate-btns">
-                        <el-button>帮助</el-button>
+                  <div class="operate-btns" v-show="false">
+                        <el-button >帮助</el-button>
                   </div>
             </div>
       </div>
+      <div class="rh-page-hint" v-show="HintShow">
+            <div class="page-hint-content">
+                  <span class="page-hint-icon">
+                        <i class="el-icon-info"></i>
+                  </span>
+                  <span class="page-hint-text">
+                        我的资源当前仅支持如下服务类型及区域的查询，更多服务及区域持续上线中。
+                  </span>
+            </div>
+            <div class="operate-bts">
+                  <div class="bt-close" @click="HintShow=false"><i class="el-icon-close"></i></div>
+            </div>
+      </div>
       <div class="rh-page-content">
-            <div class="rh-operate clearfix">
+            <div class="rh-operate clearfix" style="display:none;">
                 <el-button type="primary" @click="add_Operate('add_Form')">新增</el-button>
                 <el-button type="primary" @click="del_Group" :disabled="tr_sels.length == 0">批量删除</el-button>
-                    <div class="rh-pull-right">
-                        <el-form :model="queryForm" ref="queryForm" :inline="false" label-width="0px" label-position="right">
-                            <el-row :gutter="10">
-                                <el-col :span="8">
-                                    <el-form-item label="" prop="name">
-                                        <el-input v-model="queryForm.name" placeholder="姓名"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="8">
-                                    <el-form-item label="" prop="sex">
-                                        <el-select v-model="queryForm.sex" placeholder="性别">
-                                            <el-option label="全部" value=""></el-option>
-                                            <el-option label="男" value="0"></el-option>
-                                            <el-option label="女" value="1"></el-option>
-                                        </el-select>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="8">
-                                    <el-button v-on:click="searchWrap=!searchWrap">更多<i class="el-icon-arrow-down" v-show="!searchWrap"></i><i class="el-icon-arrow-up" v-show="searchWrap"></i></el-button>
-                                        <el-button icon="el-icon-search"   type="primary" @click="searchForm"></el-button>
-                                    
-                                </el-col>
-                            </el-row>
-                        </el-form>                       
-                        
-
-                    </div>
+                <div class="rh-pull-right">
+                    <el-form :model="queryForm" ref="queryForm" :inline="false" label-width="0px" label-position="right">
+                        <el-row :gutter="10">
+                            <el-col :span="8">
+                                <el-form-item label="" prop="name">
+                                    <el-input v-model="queryForm.name" placeholder="姓名"></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="8">
+                                <el-form-item label="" prop="sex">
+                                    <el-select v-model="queryForm.sex" placeholder="性别">
+                                        <el-option label="全部" value=""></el-option>
+                                        <el-option label="男" value="0"></el-option>
+                                        <el-option label="女" value="1"></el-option>
+                                    </el-select>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="8">
+                                <el-button v-on:click="searchWrap=!searchWrap">更多<i class="el-icon-arrow-down" v-show="!searchWrap"></i><i class="el-icon-arrow-up" v-show="searchWrap"></i></el-button>
+                                <el-button icon="el-icon-search"   type="primary" @click="searchForm"></el-button>
+                            </el-col>
+                        </el-row>
+                    </el-form>                       
+                </div>
             </div>
-            <div class="rh-search-wrap" v-show="searchWrap">
+            <div class="rh-search-wrap" v-show="true">
                 <el-form :model="queryForm" ref="queryForm" :inline="false" label-width="0px" label-position="right">
                     <el-row :gutter="10">
-                        <el-col :span="5">
+                        <el-col :span="4">
                             <el-form-item label="" prop="name">
                                 <el-input v-model="queryForm.name" placeholder="姓名"></el-input>
                             </el-form-item>
@@ -74,19 +84,57 @@
                         <el-col :span="5">
                             <el-form-item label="" prop="yxbz">
                                 <el-select v-model="queryForm.yxbz" placeholder="有效标志">
-                                <el-option v-for="item in option_yxbz" :key="item.key" :label="item.label" :value="item.value"></el-option>
+                                    <el-option 
+                                    v-for="item in option_yxbz" 
+                                    :key="item.key" 
+                                    :label="item.label"
+                                    :value="item.val">
+                                    </el-option>
                                 </el-select>
                             </el-form-item>
                         </el-col>
-                        <el-col :span="4">
-                             <el-button  type="primary" @click="searchForm('queryForm')"><i class="ump-chaxun" style="font-size:13px"></i>查 询</el-button>
+                        <el-col :span="5">
+                            <el-button v-on:click="searchWrap=!searchWrap"><i class="el-icon-arrow-down" v-show="!searchWrap"></i><i class="el-icon-arrow-up" v-show="searchWrap"></i></el-button>
+                           <el-button icon="el-icon-search"   type="primary" @click="searchForm"></el-button>
                             <el-button  type="info" @click="resetForm('queryForm')"><i class="ump-zhongzhi"></i>重 置</el-button>
+                        </el-col>
+                    </el-row>
+                    <el-row :gutter="10" v-show="searchWrap">
+                        <el-col :span="5">
+                            <el-form-item label="" prop="name">
+                                <el-input v-model="queryForm.name" placeholder="手机号"></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="5">
+                            <el-form-item label="" prop="name">
+                                <el-input v-model="queryForm.name" placeholder="身份证"></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="5">
+                            <el-form-item label="" prop="name">
+                                <el-input v-model="queryForm.name" placeholder="家庭住址"></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="5">
+                            <el-form-item label="" prop="name">
+                                <el-input v-model="queryForm.name" placeholder="收入"></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="4">
+                            <el-form-item label="" prop="name">
+                                <el-input v-model="queryForm.name" placeholder="级别"></el-input>
+                            </el-form-item>
                         </el-col>
                     </el-row>
                  </el-form>
             </div>
             <div class="rh-table">
-                <el-table :data="tableData.records" stripe border @selection-change="handleSelectionChange">
+                <el-table :data="tableData.records" stripe border @selection-change="handleSelectionChange" height="400">
+                    <template slot="empty">
+                        <div class="pic_nodata">
+                            
+                        </div>
+                    </template>
                     <el-table-column align="center" type="selection" width="55"></el-table-column>
                     <el-table-column :show-overflow-tooltip="true" align="left" prop="name" label="姓名"></el-table-column>
                     <el-table-column align="left" prop="org" label="组织"></el-table-column>
@@ -105,7 +153,7 @@
             </div>
             <div class="rh-pagination">
                   <el-pagination
-                layout="total, sizes, prev, pager, next, jumper"
+                    layout="total, sizes, prev, pager, next, jumper"
                   @current-change="handleCurrentChange"
                   @size-change="handleSizeChange"
                   :total="tableData.total"
@@ -119,84 +167,49 @@
       <div class="dailog">
             <el-dialog 
             title="新增用户"
+            append-to-body
             :visible.sync = "add_Dialog"
             width="50%">
                   <!--下面内容是可替换区域-->
-                  <div class="rh-dialog-body">
-                    <el-form :model="add_Form" :rules="rules" ref="add_Form" label-width="100px" label-position="right">
-                        <el-row>
-                            <el-col :span = "12">
-                                <el-form-item label="姓名" prop="name">
-                                    <el-input v-model="add_Form.name" placeholder="请输入姓名"></el-input>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span = "12">
-                                <el-form-item label="组织" prop="org">
-                                    <el-input v-model="add_Form.org" placeholder="请输入组织"></el-input>
-                                </el-form-item>
-                            </el-col>
-                        </el-row>
-                        <el-row>
-                            <el-col :span = "12">
-                                <el-form-item label="性别" prop="sex">
-                                    <el-radio-group v-model="add_Form.sex">
-                                    <el-radio class="radio" label="0">男</el-radio>
-                                    <el-radio class="radio" label="1">女</el-radio>
-                                    </el-radio-group>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span = "12">
-                                <el-form-item label="有效标志" prop="yxbz">
-                                    <el-select v-model="add_Form.yxbz" placeholder="请选择" @click="Alert">
-                                    <el-option v-for="item in option_yxbz" :key="item.key" :label="item.label"
-                                                :value="item.value"></el-option>
-                                    </el-select>
-                                </el-form-item>
-                            </el-col>
-                        </el-row>
-                        <el-row>
-                            <el-col :span = "12">
-                                <el-form-item label="爱好" prop="interest">
-                                    <el-checkbox-group v-model="add_Form.interest">
-                                        <el-checkbox label="A">游泳</el-checkbox>
-                                        <el-checkbox label="B">篮球</el-checkbox>
-                                        <el-checkbox label="C">足球</el-checkbox>
-                                    </el-checkbox-group>
-                                </el-form-item>
-                                </el-col>
-                        </el-row>
-                        <div class="form-search colum-center">
-
-                        </div>
-                    </el-form>
-                  </div>
-                  <div class="rh-dialog-footer" solt="footer">
-                        <el-button @click="resetForm('add_Form')">重置</el-button>
-                        <el-button @click="add_submit('add_Form')">保存</el-button>
-                  </div>
+                
                   <!--上面内容是可替换区域-->
+            </el-dialog>
+      </div>
+      <div class="dailog">
+            <el-dialog 
+            title="修改用户"
+            :visible.sync = "update_Dialog"
+            append-to-body
+            width="50%">
+    
             </el-dialog>
       </div>
   </div>
 </template>
 
 <script>
+import formAdd from "./component/form_add.vue"
+import formUpdate from "./component/form_add.vue"
 import {formateDate} from "@/utils/tools.js"
 export default {
         data(){
             return{
+                HintShow:true,
                 radio:'',
+                src:'@/assets/nodata.png',
                 //查询表单
+                selectVal:'',
                 queryForm: {
                     name: '',
                     sex: '',
                     org: '',
-                    yxbz: '',
+                    yxbz: [],
                     pageNo: 1,
-                    pageSize: 30,
+                    pageSize: 10
                 },
                 //下拉有效标志位
-                option_yxbz:[{
+            option_yxbz:[
+                {
                     val:'',
                     key: 2,
                     label:'全部'
@@ -232,7 +245,7 @@ export default {
                     sex: "",
                     sortno: "",
                     version: "",
-                    yxbz: ''
+                    yxbz:[]
                 },
                 add_Dialog:false,
                 page:{
@@ -245,119 +258,29 @@ export default {
                 searchWrap:false,
                 //表格选择
                 tr_sels:[],
+                update_Dialog:false,
             }
         },
+        components:{
+            formAdd,formUpdate
+        },
         created(){
-
+            var time = new Date('2021-03-04T00:48:58.000+00:00');
+            console.log(time);
+            console.log(formateDate(time));
         },
         mounted(){
             this.init_Table()
         },
         methods:{
-            Alert(){
-               
-            },
             //初始化表格
             init_Table(){
                 let _this = this;
                 let params = this.queryForm;
-                this.$api.get("/rest/demo/user/plist",params,function(res){
+                this.$api.get(this.$apis.home + "/rest/demo/user/plist",params,function(res){
                     if(res.success){
-                        console.log(res.data.records);
-                        _this.tableData = res.data;
-                        let list = _this.tableData.records;
-                        //对数据进行解析处理
-                        for(let i = 0; i<list.length; i++){
-                            //性别解析
-                            if(list[i].sex == '0') {
-                                list[i].sex = "男"
-                            } else {
-                                list[i].sex = "女"
-                            }
-                            //标志位解析
-                            if(list[i].yxbz == 'Y') {
-                                list[i].yxbz = "有效";
-                            } else {
-                                list[i].yxbz = "无效";
-                            }
-                            //日期解析
-                            if(list[i].createTime!== undefined && list[i]!== "" && list[i].createTime!==null){
-                                list[i].createTime = formateDate(list[i].createTime);
-                            }
-                        }
-                        _this.tableData.records = list;
-                    }
-                    
-                })
-            },
-            //初始化分页
-            init_page(){
-                this.page.total = this.tableData.total;
-                this.page.size = this.tableData.size;
-                this.page.current = this.tableData.current;
-            },
-            //分页页码操作
-            handleSelectionChange(val){
-                this.tr_sels = val;
-            },
-            //分页操作
-            handleCurrentChange(val){
-                this.queryForm.pageNo = val;
-                //更改分页后重新初始化页面
-                this.init_Table();
-            },
-            handleSizeChange(val){
-                this.queryForm.pageSize = val;
-                //更改分页后重新初始化页面
-                this.init_Table();
-            },
-           //新增操作
-            add_Operate(formName){
-                this.add_Dialog = true;
-                this.add_flag = "add";//标志
-                this.$refs[formName] !=null ? this.$refs[formName].resetFields() : 1;
-                //弹出层内容置空
-            },
-            //修改操作
-            updateById(id,formName){
-                //获取当前行数据
-                this.add_flag = "update";
-                let _this = this;
-                //置空原有表单内容
-                _this.resetForm(formName);
-                //打开弹出层
-                this.add_Dialog = true;
-                _this.$api.get("/rest/demo/user/"+id,{},function(res){
-                    if(res){
-                        let data = res.data;
-                        console.log(data)
-                        _this.add_Form.id = data.id;
-                        _this.add_Form.name = data.name;
-                        _this.add_Form.org = data.org;
-                        _this.add_Form.yxbz = data.yxbz;
-                        _this.add_Form.sex = data.sex;
-                        if(data.interest!=null && data.interest!==undefined && data.interest!==''){
-                            _this.add_Form.interest = data.interest.split(',');
-                        }
-                        _this.add_Form.createTime=data.createTime;
-                        
-                    }else{
-                        _this.message({
-                            message:'查询失败.' + res.errorMsg,
-                            type: 'error'
-                        })
-                    }     
-                })    
-            },
-             //下拉框内容搜索
-            searchForm(){
-                let _this = this;
-                let params = _this.queryForm;
-                _this.queryForm.pageNo = 1;
-                this.$api.get("/rest/demo/user/plist",params,function(res){
-                    if(res.success){
-                        _this.tableData = res.data;
 
+                        _this.tableData = res.data;
                         let list = _this.tableData.records;
                         //对数据进行解析处理
                         for(let i = 0; i<list.length; i++){
@@ -387,6 +310,70 @@ export default {
                     }
                 })
             },
+            //初始化分页
+            init_page(){
+                this.page.total = this.tableData.total;
+                this.page.size = this.tableData.size;
+                this.page.current = this.tableData.current;
+            },
+            //分页页码操作
+            handleSelectionChange(val){
+                this.tr_sels = val;
+            },
+            //分页操作
+            handleCurrentChange(val){
+                this.queryForm.pageNo = val;
+                //更改分页后重新初始化页面
+                this.init_Table();
+            },
+            handleSizeChange(val){
+                this.queryForm.pageSize = val;
+                //更改分页后重新初始化页面
+               this.init_Table();
+            },
+           //新增操作
+            add_Operate(formName){
+                this.add_Dialog = true;
+                this.add_flag = "add";//标志
+                this.$refs[formName] !=null ? this.$refs[formName].resetFields() : 1;
+                //弹出层内容置空
+            },
+            //修改操作
+            updateById(id,formName){
+                //获取当前行数据
+                this.add_flag = "update";
+                let _this = this;
+                //置空原有表单内容
+                _this.resetForm(formName);
+                //打开弹出层
+                this.add_Dialog = true;
+                _this.$api.get("/rest/demo/user/"+id,{},function(res){
+                    if(res){
+                        let data = res.data;
+                        //console.log(data)
+                        _this.add_Form.id = data.id;
+                        _this.add_Form.name = data.name;
+                        _this.add_Form.org = data.org;
+                        _this.add_Form.yxbz = data.yxbz;
+                        _this.add_Form.sex = data.sex;
+                        if(data.interest!=null && data.interest!==undefined && data.interest!==''){
+                            _this.add_Form.interest = data.interest.split(',');
+                        }
+                        _this.add_Form.createTime=data.createTime;
+                        
+                    }else{
+                        _this.message({
+                            message:'查询失败.' + res.errorMsg,
+                            type: 'error'
+                        })
+                    }     
+                })    
+            },
+             //下拉框内容搜索
+            searchForm(){
+                this.queryForm.pageNo = 1;
+                this.init_Table();
+            },
 
             //弹出表单提交
             add_submit(formName){
@@ -396,10 +383,12 @@ export default {
                     //校验完成后进行提交
                     if(valid){
                         //页面对象有数组需要转换string后再传给后台
+
                         _this.add_Form.interest = _this.add_Form.interest.join();
        
                         let para = _this.add_Form;
                         console.log(para)
+                        
                         let{id,...addparams} = para;
                         console.log(addparams);
                         if(flag =='add'){
@@ -451,7 +440,7 @@ export default {
                                         type: 'error'
                                     })
                                 }
-                                console.log(res)
+                                //console.log(res)
                             })
                         }
 
@@ -487,16 +476,17 @@ export default {
                 _this.$confirm('确定要删除所选记录吗？','提示',{
                     type: 'warning'
                 }).then(() => {
+                    
                     let ids =_this.tr_sels.map(item => item.id).join();
+
                     let para = Object.assign({},{});
                     _this.$api.delete("/rest/demo/user/"+ids,para,function(res){
                     if(res.success == true) {
-                        this.init_Table();
                         _this.$message({
                             message: '批量删除成功',
                             type: 'success'
                         });
-                        _this.search();
+                       _this.searchForm();
                     } else {
                         _this.$message({
                             message: '批量删除失败,' + res.errorMsg,
@@ -560,9 +550,10 @@ export default {
 }
 </script>
 
-<style>
-    .el-form .el-form-item {
-        margin-bottom: 0px;
+<style scoped>
+
+    .rh-page-hint{
+        margin-bottom:15px;
     }
 </style>
 

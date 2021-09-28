@@ -53,10 +53,11 @@ axios.interceptors.request.use(
 )
 
 /*组件初始化*/
-new Vue({
+let VueModel = new Vue({
   el: '#app',
   router,
   storage,
   components: { App },
   template: '<App/>'
 })
+console.log(VueModel);

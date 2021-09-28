@@ -1,7 +1,4 @@
-<style lang="less">
-    @import url('./main.less');
-     @import url('../../components/modules2/message/dialog.less');
-</style>
+
 <template>
   <div class="main-wrap" :style="{height:WinHeight+'px'}">
       <div class="rh-top-head">
@@ -143,14 +140,14 @@ export default {
   data () {
     return {
         Search_Nav:'',//search导航菜单
-        isNavShow:false,//导航是否显示
+        isNavShow:true,//导航是否显示
         p_name:'用户名', //获取用户名称
         navHeight:0,//导航高度
-        navWidth:50,//导航宽度
+        navWidth:250,//导航宽度
         isFocus:false,//菜单搜索标志符
         WinHeight:0,//浏览器窗口高度
         contentWidth:1920,//内容区宽度
-        contentLeft:50,//内容去距离左侧位置距离、
+        contentLeft:250,//内容去距离左侧位置距离、
         dataMenuList:[],//最左侧菜单导航列表数据
         breadCrumb:[],//面包屑导航
         is_contentNav_show:false
@@ -263,6 +260,8 @@ export default {
   mounted(){
       // 获取vuex中的用户信息
       this.p_name = this.$storage.state.userName;
+      console.log("this_main");
+      console.log(this);
       // 获取导航信息
       this.dataMenuList = this.$storage.getters.menuList;
       console.log("导航列表menuList");

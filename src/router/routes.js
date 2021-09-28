@@ -484,7 +484,7 @@ const routes = [
                   },
                   {
                         path: 'demo3',
-                        name: 'demo3',//demo2页面
+                        name: 'demo3',//demo3页面
                         component: () => import('@/eniv/demo/page_demo3.vue'),
                         meta: {
                               needLogin: true,//
@@ -494,13 +494,216 @@ const routes = [
                         }
                   },
                   {
+                        path: 'demo3_1',
+                        name: 'demo3_1',//demo3-1页面
+                        component: () => import('@/eniv/demo/page_demo3_1.vue'),
+                        meta: {
+                              needLogin: true,//
+                              icon: 'el-icon-news',
+                              title: '测试页面3-1',
+                              hideInMenu: false,
+                        }
+                  },
+                  {
+                        path: 'demo3_2',
+                        name: 'demo3_2',//demo3-2页面
+                        component: () => import('@/eniv/demo/page_demo3_2.vue'),
+                        meta: {
+                              needLogin: true,//
+                              icon: 'el-icon-news',
+                              title: '测试页面3-2',
+                              hideInMenu: false,
+                        }
+                  },
+                  {
                         path: 'demo4',
-                        name: 'demo4',//demo2页面
+                        name: 'demo4',//demo4页面
                         component: () => import('@/eniv/demo/page_demo4.vue'),
                         meta: {
                               needLogin: true,//
                               icon: 'el-icon-news',
                               title: '测试页面4',
+                              hideInMenu: false,
+                        }
+                  },
+                  {
+                        path: 'demo5',
+                        name: 'demo5',//demo5页面
+                        component: () => import('@/eniv/demo/page_demo5.vue'),
+                        meta: {
+                              needLogin: true,//
+                              icon: 'el-icon-news',
+                              title: '测试页面5',
+                              hideInMenu: false,
+                        }
+                  },
+                  {
+                        path: 'demo6',
+                        name: 'demo6',//demo2页面
+                        component: () => import('@/eniv/demo/page_demo6.vue'),
+                        meta: {
+                              needLogin: true,//
+                              icon: 'el-icon-news',
+                              title: '测试页面6',
+                              hideInMenu: false,
+                        }
+                  },
+                  {
+                        path: 'demo7',
+                        name: 'demo7',//demo2页面
+                        component: () => import('@/eniv/demo/page_demo7.vue'),
+                        meta: {
+                              needLogin: true,//
+                              icon: 'el-icon-news',
+                              title: '测试页面7',
+                              hideInMenu: false,
+                        }
+                  },
+                  {
+                        path: 'demo8',
+                        name: 'demo8',//demo2页面
+                        component: () => import('@/eniv/demo/page_demo8.vue'),
+                        meta: {
+                              needLogin: true,//
+                              icon: 'el-icon-news',
+                              title: '测试页面8',
+                              hideInMenu: false,
+                        }
+                  },
+                  {
+                        path: 'demo8_1',
+                        name: 'demo8_1',//demo2页面
+                        component: () => import('@/eniv/demo/page_demo8_1.vue'),
+                        meta: {
+                              needLogin: true,//
+                              icon: 'el-icon-news',
+                              title: '测试页面8_1',
+                              hideInMenu: false,
+                        }
+                  },
+                  {
+                        path: 'demo9',
+                        name: 'demo9',//demo9页面
+                        component: () => import('@/eniv/demo/page_demo9.vue'),
+                        meta: {
+                              needLogin: true,//
+                              icon: 'el-icon-news',
+                              title: 'demo9',
+                              hideInMenu: false,
+                        }
+                  },
+                  {
+                        path: 'demo9_1',
+                        name: 'demo9_1',//demo9页面
+                        component: () => import('@/eniv/demo/page_demo9_1.vue'),
+                        meta: {
+                              needLogin: true,//
+                              icon: 'el-icon-news',
+                              title: 'demo9_1',
+                              hideInMenu: false,
+                        }
+                  },
+                  {
+                        path: 'demo10',
+                        name: 'demo10',//demo9页面
+                        component: () => import('@/eniv/demo/page_demo10.vue'),
+                        meta: {
+                              needLogin: true,//
+                              icon: 'el-icon-news',
+                              title: 'demo10文本编辑器',
+                              hideInMenu: false,
+                        }
+                  },
+                  {
+                        path: 'demo11',
+                        name: 'demo11',//demo9页面
+                        component: () => import('@/eniv/demo/page_demo11.vue'),
+                        meta: {
+                              needLogin: true,//
+                              icon: 'el-icon-news',
+                              title: 'demo11',
+                              hideInMenu: false,
+                        }
+                  }, {
+                        path: 'demo12',
+                        name: 'demo12',//demo9页面
+                        component: () => import('@/eniv/demo/page_demo12.vue'),
+                        meta: {
+                              needLogin: true,//
+                              icon: 'el-icon-news',
+                              title: 'demo12',
+                              hideInMenu: false,
+                        }
+                  },  {
+                        path: 'demo14',
+                        name: 'demo14',//demo14页面注册
+                        component: () => import('@/eniv/demo/page_demo14.vue'),
+                        meta: {
+                              needLogin: true,//
+                              icon: 'el-icon-news',
+                              title: 'demo14',
+                              hideInMenu: false,
+                        }
+                  }, {
+                        path: 'demo12_1',
+                        name: 'demo12_1',//demo14页面注册
+                        component: () => import('@/eniv/demo/page_demo12_1.vue'),
+                        meta: {
+                              needLogin: true,//
+                              icon: 'el-icon-news',
+                              title: 'demo12-1',
+                              hideInMenu: false,
+                        }
+                  }, {
+                        path: 'demo12_2',
+                        name: 'demo12_2',//demo14页面注册
+                        component: () => import('@/eniv/demo/page_demo12_2.vue'),
+                        meta: {
+                              needLogin: true,//
+                              icon: 'el-icon-news',
+                              title: 'demo12-2',
+                              hideInMenu: false,
+                        }
+                  }, {
+                        path: 'demo15',
+                        name: 'demo15',//demo14页面注册
+                        component: () => import('@/eniv/demo/page_demo15.vue'),
+                        meta: {
+                              needLogin: true,//
+                              icon: 'el-icon-news',
+                              title: 'demo15',
+                              hideInMenu: false,
+                        }
+                  }, {
+                        path: 'demo16',
+                        name: 'demo16',//demo14页面注册
+                        component: () => import('@/eniv/demo/page_demo16.vue'),
+                        meta: {
+                              needLogin: true,//
+                              icon: 'el-icon-news',
+                              title: 'demo16',
+                              hideInMenu: false,
+                        }
+                  },
+                  {
+                        path: 'demo17',
+                        name: 'demo17',//demo14页面注册
+                        component: () => import('@/eniv/demo/page_demo17.vue'),
+                        meta: {
+                              needLogin: true,//
+                              icon: 'el-icon-news',
+                              title: 'demo17',
+                              hideInMenu: false,
+                        }
+                  },
+                  {
+                        path: 'demo18',
+                        name: 'demo18',//demo14页面注册
+                        component: () => import('@/eniv/demo/page_demo18.vue'),
+                        meta: {
+                              needLogin: true,//
+                              icon: 'el-icon-news',
+                              title: 'demo18',
                               hideInMenu: false,
                         }
                   }

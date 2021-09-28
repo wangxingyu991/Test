@@ -36,9 +36,9 @@ select{
 /*复写Chrome和Firefox里面的边框*/
 border:1px solid green;
 /*清除默认样式*/
-appearance:none;
+/* appearance:none;
 -moz-appearance:none;
--webkit-appearance:none;
+-webkit-appearance:none; */
 /*在选择框的最右侧中间显示小箭头图片*/
 /*background: url(../img/icon/icon_select.png) no-repeat scroll right center transparent;*/
 /*为下拉小箭头留出一点位置，避免被文字覆盖*/
@@ -75,9 +75,18 @@ select::-ms-expand { display: none; }
 .clearfix:after {content: "";display: block;height: 0;clear: both;visibility: hidden;}
 * html .clearfix{zoom:1;} /* IE6 */
 *+html .clearfix{zoom:1;} /* IE7 */
-
-body {
-font-family: 'PingFangSC','helvetica neue','hiragino sans gb','arial','microsoft yahei ui','microsoft yahei','simsun','sans-serif'!important;
-font-size: 10px;
+@font-face {
+  font-family: 'PuHuiRegular';
+  src: url("../font/Alibaba-PuHuiTi-Regular.woff2") format("woff2"),
+       url("../font/Alibaba-PuHuiTi-Regular.woff") format("woff"),
+       url("../font/Alibaba-PuHuiTi-Regular.ttf") format("truetype"),
+       url("../font/Alibaba-PuHuiTi-Regular.eot") format("embedded-opentype"),
+       url("../font/Alibaba-PuHuiTi-Regular.svg") format("svg");
 }
-html body{height:100%;}
+body {
+    font-family:'PuHuiRegular';
+    /* font-family:'PuHuiMdeium';
+    font-family:'PuHuiLight'; */
+    font-size: 12px;
+}
+html body{height:100%;overflow:hidden;}

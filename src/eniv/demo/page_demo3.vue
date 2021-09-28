@@ -1,16 +1,7 @@
-<style lang="less" >
-      @import url('../../components/modules2/page-header/page-header.less');
-      @import url('../../components/modules2/button/button.less');
-      @import url('../../components/modules2/page-hint/page-hint.less');
-      @import url('../../components/modules2/card/page-card.less');
-      @import url('../../components/modules2/input/input.less');
-      @import url('../../components/modules2/table/table.less');
-      @import url('../../components/modules2/selectInput/selectInput.less');
-      @import url('../../components/modules2/tree/tree.less');
-</style>
+
 <template>
-      <div  :style="{'height':frame_height+'px',}" class="clearfix">
-            <div class="rh-page-left" >
+      <div  class="clearfix demo3">
+            <div class="rh-page-left" :style="{ height: frameSize_height - 40 + 'px'}">
                   <div class="tree-wrap">
                         <div class="tree-serach">
                               <el-input placeholder="请输入内容" v-model="filterText" class="input-with-select">
@@ -22,12 +13,12 @@
                         </div>
                   </div>
             </div>
-            <div class="rh-page-right">
+            <div class="rh-page-right" :style="{ height: frameSize_height-15  + 'px',width: frameSize_width-280-30 + 'px'}">
                   <div class="rh-page-header">
                         <div class="rh-head-and-operate">
                               <div class="tips-content">
                                     <span class="rh-helpTip-text">
-                                    测试页面3
+                                    测试页面311111111111
                                     </span>
                                     <span class="rh-helpTip-icon">
                                           <el-tooltip class="item" content="云数据库GaussDB(for MySQL)是华为自研的最新一代企业级高扩展海量存储分布式数据库，完全兼容MySQL">
@@ -55,84 +46,102 @@
                   </div>
                   <div class="rh-page-content">
                         <div class="rh-operate clearfix">
-                              <el-button type="primary">新增</el-button>
-                              <el-button type="primary">删除</el-button>
-                              <el-button type="danger">购买服务</el-button>
-                              <el-dropdown>
-                                    <el-button type="primary">
-                                          更多菜单 <i class="el-icon-arrow-down el-icon-right"></i>
-                                    </el-button>
-                                    <el-dropdown-menu slot="dropdown" style="width:105px">
-                                          <el-dropdown-item>黄金糕</el-dropdown-item>
-                                          <el-dropdown-item>狮子头</el-dropdown-item>
-                                          <el-dropdown-item>螺丝粉</el-dropdown-item>
-                                          <el-dropdown-item>双皮奶</el-dropdown-item>
-                                    </el-dropdown-menu>
-                              </el-dropdown>
+                               <div class="rh-pull-left">
+                                    <el-button type="primary">新增</el-button>
+                                    <el-button type="primary">删除</el-button>
+                                    <el-button type="danger">购买服务</el-button>
+                                    <el-dropdown>
+                                          <el-button type="primary">
+                                                更多菜单 <i class="el-icon-arrow-down el-icon-right"></i>
+                                          </el-button>
+                                          <el-dropdown-menu slot="dropdown" style="width:105px">
+                                                <el-dropdown-item>黄金糕</el-dropdown-item>
+                                                <el-dropdown-item>狮子头</el-dropdown-item>
+                                                <el-dropdown-item>螺丝粉</el-dropdown-item>
+                                                <el-dropdown-item>双皮奶</el-dropdown-item>
+                                          </el-dropdown-menu>
+                                    </el-dropdown>
+                               </div>
                               <div class="rh-pull-right">
-                                    <el-select v-model="search.selectVal" clearable  placeholder="请选择" style="width:150px">
-                                          <el-option
-                                                v-for="item in search.options"
-                                                :key="item.value"
-                                                :label="item.label"
-                                                :value="item.value">
-                                          </el-option>
-                                    </el-select>
-                                    <el-select class="rh-button-primary"  v-model="search.lableName" placeholder="请选择报表路径" style="width:200px" ref="selectInput">
-                                          <el-option :value="search.selectId" :label="search.lableName" style="width:100%;height:100%;">
-                                                <el-tree :data="search.selectTree" default-expand-all :props="defaultProps" @node-click = "handleNodeClick"></el-tree>
-                                          </el-option>
-                                    </el-select>
-                                    <el-button v-on:click="searchWrap=!searchWrap"><i class="el-icon-arrow-down" v-show="!searchWrap"></i><i class="el-icon-arrow-up" v-show="searchWrap"></i></el-button>
-                                    <el-tooltip class="item" effect="dark" content="搜索" placement="bottom-start">
-                                          <el-button icon="el-icon-search"   type="primary"></el-button>
-                                    </el-tooltip>
+                                    <el-form :model="search" ref="search" :inline="false" label-width="0px" style="display: flex;justify-content: flex-end;">
+                                          <el-form-item label="" prop="selectVal">
+                                                <el-select v-model="search.selectVal" clearable  placeholder="请选择" style="width:150px">
+                                                      <el-option
+                                                            v-for="item in search.options"
+                                                            :key="item.value"
+                                                            :label="item.label"
+                                                            :value="item.value">
+                                                      </el-option>
+                                                </el-select>
+                                          </el-form-item>
+                                          <el-form-item label="" prop="lableName">
+                                                <el-select class="rh-button-primary"  v-model="search.lableName" placeholder="请选择报表路径" style="width:200px" ref="selectInput">
+                                                      <el-option :value="search.selectId" :label="search.lableName" style="width:100%;height:100%;">
+                                                            <el-tree :data="search.selectTree" default-expand-all :props="defaultProps" @node-click = "handleNodeClick"></el-tree>
+                                                      </el-option>
+                                                </el-select>
+                                          </el-form-item>
+                                          <el-button v-on:click="searchWrap=!searchWrap"><i class="el-icon-arrow-down" v-show="!searchWrap"></i><i class="el-icon-arrow-up" v-show="searchWrap"></i></el-button>
+                                          <el-tooltip class="item" effect="dark" content="搜索" placement="bottom-start">
+                                                <el-button icon="el-icon-search"   type="primary"></el-button>
+                                          </el-tooltip>
+                                    </el-form>
                               </div>
                         </div>
                         <div class="rh-search-wrap" v-show="searchWrap">
-                              <el-form ref="form" :model="form" label-width="80px">
+                              <el-form ref="form" :model="form" label-width="0px">
                                     <el-row :gutter="10">
                                           <el-col :span="5">
-                                                <div class="grid-content bg-purple">
+                                                <el-form-item label="" prop="form_dwssjg">
                                                       <el-input v-model="form.form_dwssjg" placeholder="单位所属机构" size="small" @focus="from.dialogVisible = true"></el-input>
-                                                </div>
+                                                </el-form-item>
                                           </el-col>
                                           <el-col :span="5">
-                                                <div class="grid-content bg-purple">
+                                                <el-form-item label="" prop="form_xzqh">
                                                       <el-input v-model="form.form_xzqh" placeholder="行政区划" size="small"  @focus="form.dialogVisible2 = true"></el-input>
-                                                </div>
+                                                </el-form-item>
                                           </el-col>
                                           <el-col :span="5">
-                                                <div class="grid-content bg-purple">
+                                                <el-form-item label="" prop="form_dwmc">
                                                       <el-input v-model="form.form_dwmc" placeholder="单位名称" size="small"></el-input>
-                                                </div>
+                                                </el-form-item>
                                           </el-col>
                                           <el-col :span="5">
-                                                <el-select v-model="form.form_jglx" placeholder="机构类型" size="small">
-                                                      <el-option v-for="item in form.opt_jglx" :key="item.value" :label="item.label" :value="item.value"></el-option>
-                                                </el-select>
+                                                <el-form-item label="" prop="form_jglx">
+                                                      <el-select v-model="form.form_jglx" placeholder="机构类型" size="small">
+                                                            <el-option v-for="item in form.opt_jglx" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                                                      </el-select>
+                                                </el-form-item>
                                           </el-col>
                                           <el-col :span="4">
-                                                <el-select v-model="form.form_kpfs" placeholder="开票方式" size="small">
-                                                      <el-option v-for="item in form.opt_kpfs" :key="item.value" :label="item.label" :value="item.value"></el-option>
-                                                </el-select>
+                                                 <el-form-item label="" prop="form_kpf">
+                                                      <el-select v-model="form.form_kpfs" placeholder="开票方式" size="small">
+                                                            <el-option v-for="item in form.opt_kpfs" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                                                      </el-select>
+                                                 </el-form-item>
                                           </el-col>
                                     </el-row>
                                     <el-row :gutter="10">
                                           <el-col :span="5">
-                                                <el-select v-model="form.form_sfzclxkj" placeholder="是否支持离线开具" size="small">
-                                                      <el-option v-for="item in form.opt_sfzclxkj" :key="item.value" :label="item.label" :value="item.value"></el-option>
-                                                </el-select>
+                                                <el-form-item label="" prop="form_sfzclxkj">
+                                                      <el-select v-model="form.form_sfzclxkj" placeholder="是否支持离线开具" size="small">
+                                                            <el-option v-for="item in form.opt_sfzclxkj" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                                                      </el-select>
+                                                 </el-form-item>
                                           </el-col>
                                           <el-col :span="5">
-                                                <el-select v-model="form.form_sffsdx" placeholder="是否发送短信" size="small">
-                                                      <el-option v-for="item in form.opt_sffsdx" :key="item.value" :label="item.label" :value="item.value"></el-option>
-                                                </el-select>
+                                                <el-form-item label="" prop="">
+                                                      <el-select v-model="form.form_sffsdx" placeholder="是否发送短信" size="small">
+                                                            <el-option v-for="item in form.opt_sffsdx" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                                                      </el-select>
+                                                </el-form-item>
                                           </el-col>
                                           <el-col :span="5">
-                                                <el-select v-model="form.form_star" placeholder="请选择是否启用" size="small">
-                                                      <el-option v-for="item in form.opt_start" :key="item.value" :label="item.label" :value="item.value"></el-option>
-                                                </el-select>
+                                                <el-form-item label="" prop="">
+                                                      <el-select v-model="form.form_star" placeholder="请选择是否启用" size="small">
+                                                            <el-option v-for="item in form.opt_start" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                                                      </el-select>
+                                                </el-form-item>
                                           </el-col>
                                           <el-col :span="9">
                                                 <el-button type="primary" plain size="small" icon="el-icon-search">查询</el-button>
@@ -254,7 +263,10 @@
 export default {
       data(){
             return{
-                  //树型选择器
+                  //框架高度
+                  frameSize_width:0,
+                  frameSize_height: 0,
+                  //树型过滤器
                   filterText:'',
                   //样式变量
                   frame_height:'',
@@ -391,6 +403,9 @@ export default {
             frameProps() {
                   return this.$storage.state.frameProp.height
             },
+            frame_width(){
+            return this.$store.state.frameSize.width;
+            },
 
       },
       //vuex参数监听
@@ -408,7 +423,9 @@ export default {
       },
       mounted() {
             //初始化高度
-            this.frame_height = this.$storage.state.frameProp.height-65;//总高度-头部50px-上边距15px
+            this.frame_height = this.$storage.state.frameProp.height;//总高度-头部50px-上边距15px
+            this.frameSize_height =this.$storage.state.frameSize.height;
+            this.frameSize_width = this.$storage.state.frameSize.width;
             //后台获取初始化表格数据
             this.$http.get("http://table-api.com").then(res=>{
                   this.dataList = res.data.array;
@@ -482,35 +499,55 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
+      .demo3{
       .rh-page-hint{
-            margin-bottom:20px;
-      }
-      .flex{
-            display: block;
-      }
-      .rh-page-left{
-            padding:20px;
-            width:240px;
-            height: 100%;
-            background: #fff;
-            margin-left:-20px;
-            margin-top:-20px;
-            float:left;
+                  margin-bottom:20px;
+            }
+            .flex{
+                  display: block;
+            }
+            .rh-page-left{
+                  padding:20px;
+                  width:240px;
+                  height: 100%;
+                  background: #fff;
+                  float:left;
 
+            }
+            .rh-page-right{
+                  /* 膨胀 */
+                  height:calc(100% + 40px);
+                  width:calc(100% - 281px);
+                  float:left;
+            }
+            .rh-page-left {
+                  padding: 20px;
+                  width: 240px;
+                  overflow: auto;
+                  background: #fff;
+                  position: absolute;
+                  left: 0px;
+                  top: 0px;
+            }
+            .rh-page-right {
+                  padding-left: 15px;
+                  padding-right: 15px;
+                  padding-top: 15px;
+                  position: absolute;
+                  top: 0px;
+                  left: 280px;
+                  right: 0px;
+                  overflow: auto;
+                  z-index: 999;
+                  transition-duration: 0.5s;
+            }
+            .rh-page-content{
+                  margin-bottom:0px;
+            }
+            .el-main{
+                  margin: -40px 0px 0px;
+            }
       }
-      .rh-page-right{
-            /* 膨胀 */
-            height:calc(100% + 40px);
-            width:calc(100% - 281px);
-            float:left;
-            padding-left: 20px;
-            margin-top:-20px;
-      }
-      .rh-page-content{
-            margin-bottom:0px;
-      }
-      .el-main{
-            margin: -40px 0px 0px;
-      }
+   
 </style>

@@ -1,4 +1,4 @@
-export  const Vuex_Mixin = {
+export default   Vuex_Mixin = {
       data(){
             return{
                   frame_height: 0, 

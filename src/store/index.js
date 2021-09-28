@@ -7,16 +7,28 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
       state: {
-            isLogin:true,
-            userName:'王兴玉',
-            password:'',
-            userId:'0',
-            is_contentNav_show:false,
-            breadCrumb:[],
-            frameProp:{
+            isLogin: true,
+            userName: '王兴玉',
+            password: '',
+            userId: '0',
+            navListAll: [],//导航数组
+            is_contentNav_show: false,
+            breadCrumb: [],
+            sideMenuList: [],
+            frameProp: {//content宽度加浏览器高度
                   height: 100,
                   width: 100,
             },
+            frameSize: {//content区域大小
+                  height: 0,
+                  width: 0,
+            },
+            isNavShow: true,
+            NavSize: {//导航大小
+                  height: 0,
+                  width: 250,
+            },
+            persmisonMenu: [],
       },
       mutations:{//
             IsLogin(state,status){

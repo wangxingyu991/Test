@@ -1,8 +1,6 @@
-<style lang="less">
 
-</style>
 <template>
-<div style="padding:0px 20px;background:#FFF;">
+<div>
       <div class="rh-page-header">
             <div class="rh-head-and-operate">
                   <div class="tips-content">
@@ -33,102 +31,119 @@
                   <div class="bt-close" @click="HintShow=false"><i class="el-icon-close"></i></div>
             </div>
       </div>
-      <div class="rh-page-content" style="padding: 0px 0px 20px !important;">
+      <div class="rh-page-content" >
+
             <div class="rh-operate clearfix">
-                  <el-button type="primary" >新增</el-button>
-                  <el-button type="primary">删除</el-button>
-                  <el-button type="danger">购买服务</el-button>
-                  <el-dropdown trigger="click" >
-                        <el-button type="primary">
-                              更多菜单 <i class="el-icon-arrow-down el-icon-right"></i>
-                        </el-button>
-                        <el-dropdown-menu slot="dropdown" style="width:105px">
-                              <el-dropdown-item @click.native="drawer = true">抽屉式弹出层</el-dropdown-item>
-                              <el-dropdown-item @click.native="Dialog = true">中心弹出层</el-dropdown-item>
-                        </el-dropdown-menu>
-                  </el-dropdown>
+                  <div class="rh-pull-left">
+                        <el-button type="primary" >新增</el-button>
+                        <el-button type="primary">删除</el-button>
+                        <el-button type="danger">购买服务</el-button>
+                        <el-dropdown trigger="click" >
+                              <el-button type="primary">
+                                    更多菜单 <i class="el-icon-arrow-down el-icon-right"></i>
+                              </el-button>
+                              <el-dropdown-menu slot="dropdown" style="width:105px">
+                                    <el-dropdown-item @click.native="drawer = true">抽屉式弹出层</el-dropdown-item>
+                                    <el-dropdown-item @click.native="Dialog = true">中心弹出层</el-dropdown-item>
+                              </el-dropdown-menu>
+                        </el-dropdown>
+                   </div>
                   <div class="rh-pull-right">
-                        <el-select v-model="select" clearable  placeholder="请选择" style="width:150px">
-                              <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                              </el-option>
-                        </el-select>
-                        <el-select class="rh-button-primary"  v-model="lableName" placeholder="请选择报表路径" style="width:200px" ref="selectInput">
-                              <el-option :value="selectId" :label="lableName" style="width:100%;height:100%;">
-                                    <el-tree :data="selectTree" default-expand-all :props="defaultProps" @node-click = "handleNodeClick"></el-tree>
-                              </el-option>
-                        </el-select>
-                        <el-button v-on:click="searchWrap=!searchWrap"><i class="el-icon-arrow-down" v-show="!searchWrap"></i><i class="el-icon-arrow-up" v-show="searchWrap"></i></el-button>
-                        <el-tooltip class="item" effect="dark" content="搜索" placement="bottom-start">
-                              <el-button icon="el-icon-search"   type="primary"></el-button>
-                        </el-tooltip>
+                        <el-form :model="search" ref="search" :inline="false" label-width="0px" style="display: flex;justify-content: flex-end;">
+                              <el-form-item label="" prop="selectVal">
+                                    <el-select v-model="search.select" clearable  placeholder="请选择" style="width:150px">
+                                          <el-option
+                                                v-for="item in search.options"
+                                                :key="item.value"
+                                                :label="item.label"
+                                                :value="item.value">
+                                          </el-option>
+                                    </el-select>
+                              </el-form-item>
+                              
+                              <el-form-item label="" prop="lableName">
+                                    <el-select class="rh-button-primary"  v-model="search.lableName" placeholder="请选择报表路径" style="width:200px" ref="selectInput">
+                                          <el-option :value="search.selectId" :label="search.lableName" style="width:100%;height:100%;">
+                                                <el-tree :data="search.selectTree" default-expand-all :props="defaultProps" @node-click = "handleNodeClick"></el-tree>
+                                          </el-option>
+                                    </el-select>
+                              </el-form-item>
+                              <el-button v-on:click="searchWrap=!searchWrap"><i class="el-icon-arrow-down" v-show="!searchWrap"></i><i class="el-icon-arrow-up" v-show="searchWrap"></i></el-button>
+                              <el-tooltip class="item" effect="dark" content="搜索" placement="bottom-start">
+                                    <el-button icon="el-icon-search"   type="primary"></el-button>
+                              </el-tooltip>
+                        </el-form>
                   </div>
+
             </div>
             <div class="rh-search-wrap" v-show="searchWrap">
-                  <el-row :gutter="10">
+                <el-form :model="queryForm" ref="queryForm" :inline="false" label-width="0px" label-position="right">
+                    <el-row :gutter="10">
                         <el-col :span="5">
-                              <div class="grid-content bg-purple">
-                                    <el-input v-model="val_dwssjg" placeholder="单位所属机构" size="small" @focus="dialogVisible = true"></el-input>
-                              </div>
+                            <el-form-item label="" prop="val_dwssjg">
+                                  <el-input v-model="queryForm.val_dwssjg" placeholder="单位所属机构" size="small" @focus="dialogVisible = true"></el-input>
+                            </el-form-item>
                         </el-col>
                         <el-col :span="5">
-                              <div class="grid-content bg-purple">
-                                    <el-input v-model="val_xzqh" placeholder="行政区划" size="small"  @focus="dialogVisible2 = true"></el-input>
-                              </div>
+                              <el-form-item label="" prop="val_xzqh">
+                                    <el-input v-model="queryForm.val_xzqh" placeholder="行政区划" size="small"  @focus="dialogVisible2 = true"></el-input>
+                              </el-form-item>
                         </el-col>
                         <el-col :span="5">
-                              <div class="grid-content bg-purple">
-                                    <el-input v-model="val_dwmc" placeholder="单位名称" size="small"></el-input>
-                              </div>
+                            <el-form-item label="" prop="val_dwmc">
+                                   <el-input v-model="queryForm.val_dwmc" placeholder="单位名称" size="small"></el-input>
+                            </el-form-item>
                         </el-col>
                         <el-col :span="5">
-                              <el-select v-model="val_jglx" placeholder="机构类型" size="small">
-                                    <el-option v-for="item in opt_jglx" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                            <el-form-item label="" prop="val_jglx">
+                              <el-select v-model="queryForm.val_jglx" placeholder="机构类型" size="small">
+                                    <el-option v-for="item in queryForm.opt_jglx" :key="item.value" :label="item.label" :value="item.value"></el-option>
                               </el-select>
+                            </el-form-item>
                         </el-col>
                         <el-col :span="4">
-                              <el-select v-model="val_kpfs" placeholder="开票方式" size="small">
-                                    <el-option v-for="item in opt_kpfs" :key="item.value" :label="item.label" :value="item.value"></el-option>
-                              </el-select>
-                        </el-col>
-                  </el-row>
-                  <el-row :gutter="10">
-                        <el-col :span="5">
-                              <div class="grid-content bg-purple">
-                                    <el-select v-model="val_sfzclxkj" placeholder="是否支持离线开具" size="small">
-                                          <el-option v-for="item in opt_sfzclxkj" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                               <el-form-item label="" prop="val_kpfs">
+                                    <el-select v-model="queryForm.val_kpfs" placeholder="开票方式" size="small">
+                                          <el-option v-for="item in queryForm.opt_kpfs" :key="item.value" :label="item.label" :value="item.value"></el-option>
                                     </el-select>
-                              </div>
+                               </el-form-item>
                         </el-col>
+                    </el-row>
+                    <el-row :gutter="10">
                         <el-col :span="5">
-                              <div class="grid-content bg-purple">
-                                    <el-select v-model="val_sffsdx" placeholder="是否发送短信" size="small">
-                                          <el-option v-for="item in opt_sffsdx" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                            <el-form-item label="" prop="val_sfzclxkj">
+                                    <el-select v-model="queryForm.val_sfzclxkj" placeholder="是否支持离线开具" size="small">
+                                          <el-option v-for="item in queryForm.opt_sfzclxkj" :key="item.value" :label="item.label" :value="item.value"></el-option>
                                     </el-select>
-                              </div>
+                            </el-form-item>
                         </el-col>
                         <el-col :span="5">
-                              <div class="grid-content bg-purple">
-                                    <el-select v-model="value" placeholder="请选择" size="small">
-                                          <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                              <el-form-item label="" prop="val_sffsdx">
+                                    <el-select v-model="queryForm.val_sffsdx" placeholder="是否发送短信" size="small">
+                                          <el-option v-for="item in queryForm.opt_sffsdx" :key="item.value" :label="item.label" :value="item.value"></el-option>
                                     </el-select>
-                              </div>
+                              </el-form-item>
                         </el-col>
+                        <el-col :span="5">
+                            <el-form-item label="" prop="value">
+                                    <el-select v-model="queryForm.value" placeholder="请选择" size="small">
+                                          <el-option v-for="item in queryForm.options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                                    </el-select>
+                            </el-form-item>
+                        </el-col>
+
                         <el-col :span="9">
-                              <div class="grid-content bg-purple">
-                                    <el-button type="primary" plain size="small" icon="el-icon-search">查询</el-button>
-                                    <el-button type="info" plain size="small" icon="el-icon-refresh-left">重置</el-button>
-                              </div>
+                              <el-button type="primary" plain size="small" icon="el-icon-search">查询</el-button>
+                              <el-button type="info" plain size="small" icon="el-icon-refresh-left">重置</el-button>
                         </el-col>
-                  </el-row>
+                    </el-row>
+                </el-form>
             </div>
             <div class="rh-table">
                   <el-table
                         :data="tableData"
                         height="500"
+                        @cell-click="cellClick"
                         @selection-change="handleSelectionChange"
                         style="width: 100%">
 
@@ -141,8 +156,9 @@
                         header-align="center"  
                         align="center" 
                         sortable 
-                        label="序号" 
+                        label="序号"
                         width="90">
+
                         </el-table-column>
                         <el-table-column
                         prop="td_dwdm"
@@ -191,6 +207,10 @@
                                           <i class="el-icon-question" style="font-size:16px;"></i>
                                     </el-tooltip>
                               </template>
+                              <template  slot-scope="scope">
+                                    <el-input v-model="scope.row.td_dwmc"></el-input>
+                                    {{scope.row.td_dwmc}}
+                              </template>
                         </el-table-column>
 
                         <el-table-column
@@ -207,9 +227,9 @@
                         width="300"
                         label="操作">
                               <template solt-scope="scope">
-                              <el-button type="text" size="mini">删除</el-button>
-                              <el-divider direction="vertical"></el-divider>
-                              <el-button type="text" size="mini">编辑</el-button>
+                                    <el-button type="text" size="mini">删除</el-button>
+                                    <el-divider direction="vertical"></el-divider>
+                                    <el-button type="text" size="mini">编辑</el-button>
                               </template>
                         </el-table-column>
                   </el-table>
@@ -234,11 +254,80 @@
       <div class="drawer-container add" :key=1000>
             <!-- 新增抽屉弹出层 -->
             <el-drawer
-            title="新增页面"
+            size="50%"
             :visible.sync="drawer"
             :direction="direction"
+            append-to-body
+            :wrapperClosable = false
+            :with-header=true
             :before-close="handleClose">
-            <span>我来啦!</span>
+            <div class="drawer-wrap">
+                  <div class="rh-drawer-head">
+                        <div class="drawer-title">
+                              新增页面
+                        </div>
+                  </div>
+                  <div class="rh-drawer-body">
+                        <el-form ref="form2" :model="form2" label-width="100px" :label-position="labelPosition">
+                              <el-row>
+                              <el-col :span = "12">
+                                    <el-form-item label="单位代码">
+                                    <el-input v-model="form2.val_dwdm"></el-input>
+                                    </el-form-item>
+                              </el-col>
+                              <el-col :span = "12">
+                                    <el-form-item label="单位名称">
+                                    <el-input v-model="form2.val_dwmc"></el-input>
+                                    </el-form-item>
+                              </el-col>
+                              </el-row>
+                              <el-row>
+                              <el-col :span = "12">
+                                    <el-form-item label="权限机关">
+                                    <el-input v-model="form2.val_qxjg"></el-input>
+                                    </el-form-item>
+                              </el-col>
+                              <el-col :span = "12">
+                                    <el-form-item label="主管机关代码">
+                                    <el-input v-model="form2.val_zgjgdm"></el-input>
+                                    </el-form-item>
+                              </el-col>
+                              </el-row>
+                              <el-row>
+                              <el-col :span = "12">
+                                    <el-form-item label="单位所属机构">
+                                    <el-input v-model="form2.val_dwssjg"></el-input>
+                                    </el-form-item>
+                              </el-col>
+                              <el-col :span = "12">
+                                    <el-form-item label="行政区划">
+                                    <el-input v-model="form2.val_xzqh"></el-input>
+                                    </el-form-item>
+                              </el-col>
+                              </el-row>
+                              <el-row>
+                              <el-col :span = "12">
+                                    <el-form-item label="机关类型">
+                                    <el-input v-model="form2.val_jglx"></el-input>
+                                    </el-form-item>
+                              </el-col>
+                              <el-col :span = "12">
+                                    <el-form-item label="开票方式">
+                                    <el-input v-model="form2.val_kpfs"></el-input>
+                                    </el-form-item>
+                              </el-col>
+                              </el-row>
+                                    <el-row>
+                                          <el-col :span="24">
+                                                <div class="bt-group">
+                                                      <el-button type="primary">提交</el-button>
+                                                      <el-button type="success">取消</el-button>
+                                                </div>
+                                          </el-col>
+                                    </el-row>
+                        </el-form> 
+                  </div>
+            </div>
             </el-drawer>
       </div>
       <div class="dailog">
@@ -246,10 +335,62 @@
             title="新增用户"
             :visible.sync = "Dialog"
             width="50%"
+            append-to-body
+            :close-on-click-modal='false'
             :before-close="handleClose">
                   <!--下面内容是可替换区域-->
                   <div class="rh-dialog-body">
-                              
+                        <el-form ref="form2" :model="form2" label-width="100px" :label-position="labelPosition">
+                              <el-row>
+                                    <el-col :span = "12">
+                                          <el-form-item label="单位代码">
+                                          <el-input v-model="form2.val_dwdm"></el-input>
+                                          </el-form-item>
+                                    </el-col>
+                                    <el-col :span = "12">
+                                          <el-form-item label="单位名称">
+                                          <el-input v-model="form2.val_dwmc"></el-input>
+                                          </el-form-item>
+                                    </el-col>
+                              </el-row>
+                              <el-row>
+                                    <el-col :span = "12">
+                                          <el-form-item label="权限机关">
+                                          <el-input v-model="form2.val_qxjg"></el-input>
+                                          </el-form-item>
+                                    </el-col>
+                                    <el-col :span = "12">
+                                          <el-form-item label="主管机关代码">
+                                          <el-input v-model="form2.val_zgjgdm"></el-input>
+                                          </el-form-item>
+                                    </el-col>
+                              </el-row>
+                              <el-row>
+                                    <el-col :span = "12">
+                                          <el-form-item label="单位所属机构">
+                                          <el-input v-model="form2.val_dwssjg"></el-input>
+                                          </el-form-item>
+                                    </el-col>
+                                    <el-col :span = "12">
+                                          <el-form-item label="行政区划">
+                                          <el-input v-model="form2.val_xzqh"></el-input>
+                                          </el-form-item>
+                                    </el-col>
+                              </el-row>
+                              <el-row>
+                                    <el-col :span = "12">
+                                          <el-form-item label="机关类型">
+                                          <el-input v-model="form2.val_jglx"></el-input>
+                                          </el-form-item>
+                                    </el-col>
+                                    <el-col :span = "12">
+                                          <el-form-item label="开票方式">
+                                          <el-input v-model="form2.val_kpfs"></el-input>
+                                          </el-form-item>
+                                    </el-col>
+                              </el-row>
+
+                        </el-form> 
                   </div>
                   <div class="rh-dialog-footer" solt="footer">
                         <el-button @click="Dialog = false">取消</el-button>
@@ -272,36 +413,41 @@ export default {
       data() {
             return {
                   drawer:false,//抽屉弹出层
-                  Dialog: true,//弹出层信息
+                  Dialog: false,//弹出层信息
                   direction: 'rtl',//抽屉方向
                   HintShow:true,//提示信息框
                   searchWrap:false,//高级收索框
                   searchForm:{},//收索表单
                   dataList:[],//数据列表
                   tableData:[],//表格数据
-                  sortList:[],//
-                  total:0,
-                  pageSizes:[10,20,30],
-                  pageSize:10,
-                  selectVal:'',
-                  selectId:'',
-                  lableName:'',
-                  defaultProps: {
+                  sortList:[],//表格分页数据
+                  total:0,//表格总条数
+                  pageSizes:[10,20,30],//表格分页数量
+                  pageSize:10,//当前分页条数
+                  selectVal:'',//下拉树按钮
+                  selectId:'',//下拉项目id
+                  lableName:'',//下拉内容label
+                  radio_Bt:'',//radio按钮
+                  defaultProps: {//树型模板
                         children: 'children',
                         label: 'label'
                   },
+                  search:{
+                        select:"",
+                        selectId:"",
+                        options:[{value:'1',label:'所有状态'},{value:'2',label:'已启用'},{value:'3',label:'已停用'},{value:'4',label:'删除中'},{value:'5',label:'异常'},{value:'6',label:'已冻结'}],
+                  },
                   select:'',
-                  options:[{value:'1',label:'所有状态'},{value:'2',label:'已启用'},{value:'3',label:'已停用'},{value:'4',label:'删除中'},{value:'5',label:'异常'},{value:'6',label:'已冻结'}],
                   selectTree: [{
                         label: '',
                         children: [{
-                        label: '二级 1-1',
+                        label: '济南总局',
                         children: [{
-                              label: '三级 1-1-1'
+                              label: '历下区分局'
                               }]
                         }]
                   }, {
-                        label: '一级 2',
+                        label: '                                                                  ',
                         children: [{
                         label: '二级 2-1',
                               children: [{
@@ -358,27 +504,29 @@ export default {
                         address: '上海市普陀区金沙江路 1518 弄'
                   }],
                   //表单数据
-                  val_dwssjg:'',
-                  dialogVisible:false,
-                  dialogVisible2:false,
-                  val_xzqh:'',
-                  val_dwmc:'',
-                  val_jglx:'',
-                  opt_jglx:[{value:'选项1',label:'省直用票单位'},{value:'选项2',label:'其他用票单位'},{value:'选项3',label:'其他'}],
-                  val_kpfs:'',
-                  opt_kpfs:[{value:'选项1',label:'同步'},{value:'选项2',label:'异步'}],
-                  val_sfzclxkj:'',
-                  opt_sfzclxkj:[{value:'选项1',label:'支持'},{value:'选项2',label:'不支持'}],
-                  val_sffsdx:'',
-                  opt_sffsdx:[{value:'选项1',label:'发送'},{value:'选项2',label:'不发送'}],
-                  value:'',
-                  options: [{
-                        value: '选项1',
-                        label: '启用'
-                        }, {
-                        value: '选项2',
-                        label: '禁用'
-                  }],
+                  queryForm: {
+                        val_dwssjg:'',
+                        dialogVisible:false,
+                        dialogVisible2:false,
+                        val_xzqh:'',
+                        val_dwmc:'',
+                        val_jglx:'',
+                        opt_jglx:[{value:'选项1',label:'省直用票单位'},{value:'选项2',label:'其他用票单位'},{value:'选项3',label:'其他'}],
+                        val_kpfs:'',
+                        opt_kpfs:[{value:'选项1',label:'同步'},{value:'选项2',label:'异步'}],
+                        val_sfzclxkj:'',
+                        opt_sfzclxkj:[{value:'选项1',label:'支持'},{value:'选项2',label:'不支持'}],
+                        val_sffsdx:'',
+                        opt_sffsdx:[{value:'选项1',label:'发送'},{value:'选项2',label:'不发送'}],
+                        value:'',
+                        options: [{
+                              value: '选项1',
+                              label: '启用'
+                              }, {
+                              value: '选项2',
+                              label: '禁用'
+                        }],
+                  },
                   //树配置信息
                   defaultProps: {
                         children: 'children',
@@ -387,6 +535,18 @@ export default {
                   defaultProps2: {
                         children: 'children',
                         label: 'label'
+                  },
+                  //弹出层表单内容
+                  labelPosition:'right',
+                  form2:{
+                        val_dwdm: '',//单位代码
+                        val_dwmc: '',//单位名称
+                        val_qxjg: '',//权限机关
+                        val_zgjgdm: '',//主管机关代码
+                        val_dwssjg: '',//单位所属机构
+                        val_xzqh: '',//行政区划
+                        val_jglx: '',//机关类型
+                        val_kpfs: ''//开票方式
                   }
             };
       },
@@ -409,8 +569,18 @@ export default {
             })
       },
       methods:{
+            //单元格点击函数
+            cellClick(row, column, cell, event){
+                  console.log("row:");
+                  console.log(row);
+                  console.log(this.tableData)
+            },
             handleCommand(command) {
                   this.drawer = command;
+            },
+            //弹出层提交信息
+            summitDialog(){
+
             },
             handleClose(done) {
                    done();
@@ -460,8 +630,11 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
       .rh-page-hint{
             margin-bottom:15px;
+      }
+      .bt-group{
+            text-align: center;
       }
 </style>

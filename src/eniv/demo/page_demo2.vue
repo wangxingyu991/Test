@@ -1,19 +1,11 @@
-<style lang="less">
-      @import url('../../components/modules2/page-header/page-header.less');
-      @import url('../../components/modules2/page-hint/page-hint.less');
-      @import url('../../components/modules2/button/button.less');
-      @import url('../../components/modules2/card/page-card.less');
-      @import url('../../components/modules2/form/form.less');
-      @import url('../../components/modules2/selectInput/selectInput.less');
-      @import url('../../components/modules2/table/table.less');
-</style>
+
 <template>
-<div style="margin-top:-20px;">
+<div >
       <div class="rh-page-header">
             <div class="rh-head-and-operate">
                   <div class="tips-content">
                         <span class="rh-helpTip-text">
-                        测试页面2
+                        测试页面222222222222
                         </span>
                         <span class="rh-helpTip-icon">
                               <el-tooltip class="item" content="云数据库GaussDB(for MySQL)是华为自研的最新一代企业级高扩展海量存储分布式数据库，完全兼容MySQL">
@@ -41,102 +33,119 @@
       </div>
       <div class="rh-page-content">
             <div class="rh-operate clearfix">
-                  <el-button type="primary">新增</el-button>
-                  <el-button type="primary">删除</el-button>
-                  <el-button type="danger">购买服务</el-button>
-                  <el-dropdown>
-                        <el-button type="primary">
-                              更多菜单 <i class="el-icon-arrow-down el-icon-right"></i>
-                        </el-button>
-                        <el-dropdown-menu slot="dropdown" style="width:105px">
-                              <el-dropdown-item>黄金糕</el-dropdown-item>
-                              <el-dropdown-item>狮子头</el-dropdown-item>
-                              <el-dropdown-item>螺丝粉</el-dropdown-item>
-                              <el-dropdown-item>双皮奶</el-dropdown-item>
-                        </el-dropdown-menu>
-                  </el-dropdown>
+                  <div class="rh-pull-left">
+                        <el-button type="primary">新增</el-button>
+                        <el-button type="primary">删除</el-button>
+                        <el-button type="danger">购买服务</el-button>
+                        <el-dropdown>
+                              <el-button type="primary">
+                                    更多菜单 <i class="el-icon-arrow-down el-icon-right"></i>
+                              </el-button>
+                              <el-dropdown-menu slot="dropdown" style="width:105px">
+                                    <el-dropdown-item>黄金糕</el-dropdown-item>
+                                    <el-dropdown-item>狮子头</el-dropdown-item>
+                                    <el-dropdown-item>螺丝粉</el-dropdown-item>
+                                    <el-dropdown-item>双皮奶</el-dropdown-item>
+                              </el-dropdown-menu>
+                        </el-dropdown>
+                  </div>
                   <div class="rh-pull-right">
-                        <el-select v-model="select" clearable  placeholder="请选择" style="width:150px">
-                              <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                              </el-option>
-                        </el-select>
-                        <el-select class="rh-button-primary"  v-model="lableName" placeholder="请选择报表路径" style="width:200px" ref="selectInput">
-                              <el-option :value="selectId" :label="lableName" style="width:100%;height:100%;">
-                                    <el-tree :data="selectTree" default-expand-all :props="defaultProps" @node-click = "handleNodeClick"></el-tree>
-                              </el-option>
-                        </el-select>
-                        <el-button v-on:click="searchWrap=!searchWrap"><i class="el-icon-arrow-down" v-show="!searchWrap"></i><i class="el-icon-arrow-up" v-show="searchWrap"></i></el-button>
-                        <el-tooltip class="item" effect="dark" content="搜索" placement="bottom-start">
-                              <el-button icon="el-icon-search"   type="primary"></el-button>
-                        </el-tooltip>
+                        <el-form :model="search" ref="search" :inline="false" label-width="0px" style="display: flex;justify-content: flex-end;">
+                              <el-form-item label="" prop="selectVal">
+                                    <el-select v-model="search.selectVal" clearable  placeholder="请选择" style="width:150px">
+                                          <el-option
+                                                v-for="item in search.options"
+                                                :key="item.value"
+                                                :label="item.label"
+                                                :value="item.value">
+                                          </el-option>
+                                    </el-select>
+                              </el-form-item>
+                              <el-form-item label="" prop="lableName">
+                                    <el-select class="rh-button-primary"  v-model="search.lableName" placeholder="请选择报表路径" style="width:200px" ref="selectInput">
+                                          <el-option :value="search.selectId" :label="search.lableName" style="width:100%;height:100%;">
+                                                <el-tree :data="search.selectTree" default-expand-all :props="defaultProps" @node-click = "handleNodeClick"></el-tree>
+                                          </el-option>
+                                    </el-select>
+                              </el-form-item>
+                              <el-button v-on:click="searchWrap=!searchWrap"><i class="el-icon-arrow-down" v-show="!searchWrap"></i><i class="el-icon-arrow-up" v-show="searchWrap"></i></el-button>
+                              <el-tooltip class="item" effect="dark" content="搜索" placement="bottom-start">
+                                    <el-button icon="el-icon-search"   type="primary"></el-button>
+                              </el-tooltip>
+                        </el-form>
                   </div>
             </div>
             <div class="rh-search-wrap" v-show="searchWrap">
-                  <el-row :gutter="10">
-                        <el-col :span="5">
-                              <div class="grid-content bg-purple">
-                                    <el-input v-model="val_dwssjg" placeholder="单位所属机构" size="small" @focus="dialogVisible = true"></el-input>
-                              </div>
-                        </el-col>
-                        <el-col :span="5">
-                              <div class="grid-content bg-purple">
-                                    <el-input v-model="val_xzqh" placeholder="行政区划" size="small"  @focus="dialogVisible2 = true"></el-input>
-                              </div>
-                        </el-col>
-                        <el-col :span="5">
-                              <div class="grid-content bg-purple">
-                                    <el-input v-model="val_dwmc" placeholder="单位名称" size="small"></el-input>
-                              </div>
-                        </el-col>
-                        <el-col :span="5">
-                              <el-select v-model="val_jglx" placeholder="机构类型" size="small">
-                                    <el-option v-for="item in opt_jglx" :key="item.value" :label="item.label" :value="item.value"></el-option>
-                              </el-select>
-                        </el-col>
-                        <el-col :span="4">
-                              <el-select v-model="val_kpfs" placeholder="开票方式" size="small">
-                                    <el-option v-for="item in opt_kpfs" :key="item.value" :label="item.label" :value="item.value"></el-option>
-                              </el-select>
-                        </el-col>
-                  </el-row>
-                  <el-row :gutter="10">
-                        <el-col :span="5">
-                              <div class="grid-content bg-purple">
-                                    <el-select v-model="val_sfzclxkj" placeholder="是否支持离线开具" size="small">
-                                          <el-option v-for="item in opt_sfzclxkj" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                   <el-form ref="form" :model="form" label-width="0px">
+                        <el-row :gutter="10">
+                              <el-col :span="5">
+                                    <div class="grid-content bg-purple">
+                                          <el-form-item label="" >
+                                                <el-input v-model="form.val_dwssjg" placeholder="单位所属机构" size="small" @focus="dialogVisible = true"></el-input>
+                                          </el-form-item>
+                                    </div>
+                              </el-col>
+                              <el-col :span="5">
+                                    <div class="grid-content bg-purple">
+                                          <el-form-item label="" >
+                                          <el-input v-model="form.val_xzqh" placeholder="行政区划" size="small"  @focus="dialogVisible2 = true"></el-input>
+                                          </el-form-item>
+                                    </div>
+                              </el-col>
+                              <el-col :span="5">
+                                    <div class="grid-content bg-purple">
+                                          <el-input v-model="form.val_dwmc" placeholder="单位名称" size="small"></el-input>
+                                    </div>
+                              </el-col>
+                              <el-col :span="5">
+                                    <el-select v-model="form.val_jglx" placeholder="机构类型" size="small">
+                                          <el-option v-for="item in opt_jglx" :key="item.value" :label="item.label" :value="item.value"></el-option>
                                     </el-select>
-                              </div>
-                        </el-col>
-                        <el-col :span="5">
-                              <div class="grid-content bg-purple">
-                                    <el-select v-model="val_sffsdx" placeholder="是否发送短信" size="small">
-                                          <el-option v-for="item in opt_sffsdx" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                              </el-col>
+                              <el-col :span="4">
+                                    <el-select v-model="form.val_kpfs" placeholder="开票方式" size="small">
+                                          <el-option v-for="item in opt_kpfs" :key="item.value" :label="item.label" :value="item.value"></el-option>
                                     </el-select>
-                              </div>
-                        </el-col>
-                        <el-col :span="5">
-                              <div class="grid-content bg-purple">
-                                    <el-select v-model="value" placeholder="请选择" size="small">
-                                          <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
-                                    </el-select>
-                              </div>
-                        </el-col>
-                        <el-col :span="9">
-                              <div class="grid-content bg-purple">
-                                    <el-button type="primary" plain size="small" icon="el-icon-search">查询</el-button>
-                                    <el-button type="info" plain size="small" icon="el-icon-refresh-left">重置</el-button>
-                              </div>
-                        </el-col>
-                  </el-row>
+                              </el-col>
+                        </el-row>
+                        <el-row :gutter="10">
+                              <el-col :span="5">
+                                    <div class="grid-content bg-purple">
+                                          <el-form-item label="" >
+                                                <el-select v-model="form.val_sfzclxkj" placeholder="是否支持离线开具" size="small">
+                                                      <el-option v-for="item in opt_sfzclxkj" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                                                </el-select>
+                                          </el-form-item>
+                                    </div>
+                              </el-col>
+                              <el-col :span="5">
+                                    <div class="grid-content bg-purple">
+                                          <el-select v-model="form.val_sffsdx" placeholder="是否发送短信" size="small">
+                                                <el-option v-for="item in opt_sffsdx" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                                          </el-select>
+                                    </div>
+                              </el-col>
+                              <el-col :span="5">
+                                    <div class="grid-content bg-purple">
+                                          <el-select v-model="form.value" placeholder="请选择" size="small">
+                                                <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                                          </el-select>
+                                    </div>
+                              </el-col>
+                              <el-col :span="9">
+                                    <div class="grid-content bg-purple">
+                                          <el-button type="primary" plain size="small" icon="el-icon-search">查询</el-button>
+                                          <el-button type="info" plain size="small" icon="el-icon-refresh-left">重置</el-button>
+                                    </div>
+                              </el-col>
+                        </el-row>
+                   </el-form>
             </div>
             <div class="rh-table">
                   <el-table
                         :data="tableData"
                         height="500"
+                        border
                         @selection-change="handleSelectionChange"
                         style="width: 100%">
 
@@ -253,7 +262,54 @@ export default {
                   searchWrap:false,
                   searchForm:{
                   },
-
+                  //search输入框数据
+                  search:{
+                        selectVal:'',
+                        selectId:'',
+                        lableName:'',
+                         options:[{value:'1',label:'所有状态'},{value:'2',label:'已启用'},{value:'3',label:'已停用'},{value:'4',label:'删除中'},{value:'5',label:'异常'},{value:'6',label:'已冻结'}],
+                        defaultProps: {
+                              children: 'children',
+                              label: 'label'
+                        },
+                        select:'',
+                        selectTree: [{
+                              label: '省局',
+                              children: [{
+                              label: '市局',
+                              children: [{
+                                    label: '区级'
+                                    }]
+                              }]
+                        }, 
+                        {
+                              label: '北京总局',
+                              children: [{
+                              label: '海淀区分局',
+                                    children: [{
+                                          label: '中关村街道办事处'
+                                    }]
+                              }, {
+                                    label: '昌平区分局',
+                                    children: [{
+                                          label: '昌平平安街道办事处'
+                                    }]
+                              }]
+                        }, {
+                              label: '山东局',
+                              children: [{
+                                    label: '济南总局',
+                                    children: [{
+                                          label: '历下区分局'
+                                    }]
+                                    }, {
+                                    label: '潍坊分局',
+                                    children: [{
+                                          label: '潍坊坊子区分局'
+                                    }]
+                              }]
+                        }],
+                  },
                   dataList:[],
                   tableData:[],
                   sortList:[],
@@ -336,18 +392,21 @@ export default {
                         address: '上海市普陀区金沙江路 1518 弄'
                   }],
                   //表单数据
-                  val_dwssjg:'',
+                  form:{
+                        val_xzqh:'',
+                        val_dwmc:'',
+                        val_jglx:'',
+                        val_dwssjg:'',
+                        val_kpfs:'',
+                        val_sfzclxkj:'',
+                        val_sffsdx:'',
+                        value:'',
+                  },
                   dialogVisible:false,
                   dialogVisible2:false,
-                  val_xzqh:'',
-                  val_dwmc:'',
-                  val_jglx:'',
                   opt_jglx:[{value:'选项1',label:'省直用票单位'},{value:'选项2',label:'其他用票单位'},{value:'选项3',label:'其他'}],
-                  val_kpfs:'',
                   opt_kpfs:[{value:'选项1',label:'同步'},{value:'选项2',label:'异步'}],
-                  val_sfzclxkj:'',
                   opt_sfzclxkj:[{value:'选项1',label:'支持'},{value:'选项2',label:'不支持'}],
-                  val_sffsdx:'',
                   opt_sffsdx:[{value:'选项1',label:'发送'},{value:'选项2',label:'不发送'}],
                   value:'',
                   options: [{
@@ -427,7 +486,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
       .rh-page-hint{
             margin-bottom:15px;
       }

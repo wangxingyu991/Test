@@ -1,13 +1,7 @@
 <style lang="less">
-      @import url('../../components/modules2/page-header/page-header.less');
-      @import url('../../components/modules2/button/button.less');
-      @import url('../../components/modules2/card/page-card.less');
-      @import url('../../components/modules2/form/form.less');
-      @import url('../../components/modules2/selectInput/selectInput.less');
-      @import url('../../components/modules2/table/table.less');
 </style>
 <template>
-<div style="margin-top:-20px;">
+<div >
       <div class="rh-page-header">
             <div class="rh-head-and-operate">
                   <div class="tips-content">
@@ -27,20 +21,22 @@
       </div>
       <div class="rh-page-content">
             <div class="rh-operate clearfix">
-                  <el-button >删除</el-button>
-                  <el-button >绑定备份策略</el-button>
-                  <el-button type="danger">购买服务</el-button>
-                  <el-dropdown>
-                        <el-button type="primary">
-                              更多菜单 <i class="el-icon-arrow-down el-icon-right"></i>
-                        </el-button>
-                        <el-dropdown-menu slot="dropdown" style="width:105px">
-                              <el-dropdown-item>黄金糕</el-dropdown-item>
-                              <el-dropdown-item>狮子头</el-dropdown-item>
-                              <el-dropdown-item>螺丝粉</el-dropdown-item>
-                              <el-dropdown-item>双皮奶</el-dropdown-item>
-                        </el-dropdown-menu>
-                  </el-dropdown>
+                  <div class="rh-pull-left">
+                        <el-button >删除</el-button>
+                        <el-button >绑定备份策略</el-button>
+                        <el-button type="danger">购买服务</el-button>
+                        <el-dropdown>
+                              <el-button type="primary">
+                                    更多菜单 <i class="el-icon-arrow-down el-icon-right"></i>
+                              </el-button>
+                              <el-dropdown-menu slot="dropdown" style="width:105px">
+                                    <el-dropdown-item>菜单一</el-dropdown-item>
+                                    <el-dropdown-item>菜单二</el-dropdown-item>
+                                    <el-dropdown-item>菜单三</el-dropdown-item>
+                                    <el-dropdown-item>菜单四</el-dropdown-item>
+                              </el-dropdown-menu>
+                        </el-dropdown>
+                  </div>
                   <div class="rh-pull-right">
                         <el-select v-model="select" clearable  placeholder="请选择" style="width:150px">
                               <el-option
@@ -113,18 +109,13 @@
                               prop="td_dwmc"
                               label="单位名称"
                               header-align="center"
+                              align="center"
                               show-overflow-tooltip
                               width="250">
-                              <template slot="header">
-                                    单位名称
-                                    <el-tooltip 
-                                    trigger="hover" 
-                                    effect = "dark"
-                                    content="">
-                                          <div slot="content" style="width:140px;">
-                                                单位代码：请选择一个或多个要设置备份策略的存储库
-                                          </div>
-                                          <i class="el-icon-question" style="font-size:16px;"></i>
+                              <template slot-scope="scope">
+                                    <el-tooltip trigger="hover">
+                                          <div slot="content">{{scope.row.td_dwmc}}</div>
+                                          <span class="td_link">***********</span>
                                     </el-tooltip>
                               </template>
                         </el-table-column>
@@ -170,7 +161,10 @@
 </template>
 
 <script>
+import {formateDate,getDate} from "@/utils/tools.js"
+
 export default {
+
       props: {
             default:Object
       },
@@ -262,8 +256,8 @@ export default {
             };
       },
       mounted() {
+            //var date = new Date('2021-03-04T00:48:58.000+00:00');
             this.$http.get("http://table-api.com").then(res=>{
-
                   this.dataList = res.data.array;
                   this.total = res.data.array.length;
                   this.sortList = ( _ => {
@@ -318,9 +312,3 @@ export default {
       }
 };
 </script>
-
-<style>
-      .rh-pull-right{
-            float:right;
-      }
-</style>

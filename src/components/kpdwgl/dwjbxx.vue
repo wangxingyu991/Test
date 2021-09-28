@@ -318,6 +318,8 @@ export default{
             }
       },
       created(){
+            console.log("shis_dwjbxx");
+            console.log(this);
             this.$http.get("http://table-api.com").then(res=>{
                   //console.log(res.data);
                   this.tableData = res.data.array;
