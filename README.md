@@ -1,4 +1,6 @@
 # rh_element
+登录名:superadmin
+密 码：111111
 
 > A Vue.js project
 
